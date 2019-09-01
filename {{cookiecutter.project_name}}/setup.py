@@ -6,12 +6,10 @@ from setuptools import setup, find_packages
 
 logger = logging.getLogger(__name__)
 
-app_name = 'app'
-
 # Kept manually in sync with airflow.__version__
 # noinspection PyUnresolvedReferences
-spec = importlib.util.spec_from_file_location("{app_name}.version".format(app_name=app_name),
-                                              os.path.join(app_name, 'version.py'))
+spec = importlib.util.spec_from_file_location("{{cookiecutter.project_name}}.version",
+                                              os.path.join("{{cookiecutter.project_name}}", 'version.py'))
 # noinspection PyUnresolvedReferences
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
@@ -56,7 +54,7 @@ def git_version(version_):
         return 'no_git_version'
 
 
-def write_version(filename=os.path.join(*["app", "git_version"])):
+def write_version(filename=os.path.join(*["{{cookiecutter.project_name}}", "git_version"])):
     """
     Write the Semver version + git hash to file, e.g. ".dev0+2f635dc265e78db6708f59f68e8009abb92c1e65".
     :param str filename: Destination file to write
@@ -69,23 +67,18 @@ def write_version(filename=os.path.join(*["app", "git_version"])):
 def do_setup():
     write_version()
     setup(
-        name=app_name,
+        name="{{cookiecutter.project_name}}",
         version=version,
         packages=find_packages(exclude=['tests', 'tests.*']),
         install_requires=[
             'begins',
         ],
-        scripts=['{app}/bin/{app}'.format(app=app_name)],
+        scripts=['{{cookiecutter.project_name}}/bin/{{cookiecutter.project_name}}}'],
         zip_safe=False,
-        author="Artyom Fomenko",
-        description="App description",
+        author="{{cookiecutter.author}}",
+        description="{{cookiecutter.description}}",
         long_description=long_description,
-        license='',
-        classifiers=[
-            'Intended Audience :: Developers',
-            'Programming Language :: Python :: 3.7',
-        ],
-        keywords='docker ml ai pytorch',
+        license='MIT License',
     )
 
 

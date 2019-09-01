@@ -7,11 +7,11 @@ logger = logging.getLogger(__name__)
 @begin.subcommand
 def train():
     """Main command"""
-    import app.train
-    app.train.train()
+    import {{cookiecutter.project_name}}.train
+    {{cookiecutter.project_name}}.train.train()
 
 
 @begin.start
 def main():
-    """Short description"""
+    """{{cookiecutter.description}}"""
     pass
