@@ -8,8 +8,8 @@ logger = logging.getLogger(__name__)
 
 # Kept manually in sync with airflow.__version__
 # noinspection PyUnresolvedReferences
-spec = importlib.util.spec_from_file_location("{{cookiecutter.project_name}}.version",
-                                              os.path.join("{{cookiecutter.project_name}}", 'version.py'))
+spec = importlib.util.spec_from_file_location("{{cookiecutter.project_slug}}.version",
+                                              os.path.join("{{cookiecutter.project_slug}}", 'version.py'))
 # noinspection PyUnresolvedReferences
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
@@ -54,7 +54,7 @@ def git_version(version_):
         return 'no_git_version'
 
 
-def write_version(filename=os.path.join(*["{{cookiecutter.project_name}}", "git_version"])):
+def write_version(filename=os.path.join(*["{{cookiecutter.project_slug}}", "git_version"])):
     """
     Write the Semver version + git hash to file, e.g. ".dev0+2f635dc265e78db6708f59f68e8009abb92c1e65".
     :param str filename: Destination file to write
@@ -67,13 +67,13 @@ def write_version(filename=os.path.join(*["{{cookiecutter.project_name}}", "git_
 def do_setup():
     write_version()
     setup(
-        name="{{cookiecutter.project_name}}",
+        name="{{cookiecutter.project_slug}}",
         version=version,
-        packages=find_packages(exclude=['tests', 'tests.*']),
+        packages=find_packages(exclude=['tests', 'tests.*', 'home']),
         install_requires=[
             'begins',
         ],
-        scripts=['{{cookiecutter.project_name}}/bin/{{cookiecutter.project_name}}}'],
+        scripts=['{{cookiecutter.project_slug}}/bin/{{cookiecutter.project_slug}}'],
         zip_safe=False,
         author="{{cookiecutter.author}}",
         description="{{cookiecutter.description}}",

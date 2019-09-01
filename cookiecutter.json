@@ -1,5 +1,8 @@
 {
-    "project_name": "sample_ml",
+    "project_name": "Example Project",
+    "project_slug": "{{ cookiecutter.project_name | lower | replace(' ','_') }}",
+    "env_prefix": "{{ cookiecutter.project_name | upper | replace(' ', '_') }}",
     "author": "Harry Potter",
+    "company": "{{ cookiecutter.author | lower | replace(' ','') }}",
     "description": "Description"
 }
