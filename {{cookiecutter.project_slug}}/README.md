@@ -12,7 +12,7 @@ run cd `{{cookiecutter.project_slug}} && pip install -e .`
 After that, {{cookiecutter.project_name}} can be imported inside any python code as
 ```python
 import {{cookiecutter.project_slug}}
-# {{cookiecutter.pproject_name}} creates configuration file {{cookiecutter.project_slug}}.cfg from template (default_{{cookiecutter.project_slug}}.cfg
+# {{cookiecutter.project_name}} creates configuration file {{cookiecutter.project_slug}}.cfg from template (default_{{cookiecutter.project_slug}}.cfg
 # inside current working directory
 # You can now edit the {{cookiecutter.project_slug}}.cfg to change the configuration and rerun script
 
