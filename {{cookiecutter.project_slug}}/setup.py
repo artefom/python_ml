@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 
 logger = logging.getLogger(__name__)
 
-# Kept manually in sync with airflow.__version__
+# Kept manually in sync with {{cookiecutter.project_slug}}.__version__
 # noinspection PyUnresolvedReferences
 spec = importlib.util.spec_from_file_location("{{cookiecutter.project_slug}}.version",
                                               os.path.join("{{cookiecutter.project_slug}}", 'version.py'))
@@ -31,7 +31,7 @@ def git_version(version_):
     branch head. Finally, a "dirty" suffix is appended to indicate that uncommitted
     changes are present.
     :param str version_: Semver version
-    :return: Found Airflow version in Git repo
+    :return: Found {{cookiecutter.project_slug}} version in Git repo
     :rtype: str
     """
     try:

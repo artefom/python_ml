@@ -1,8 +1,11 @@
-APP_IMAGE={{cookiecutter.company}}/{{cookiecutter.project_slug}}:latest
-APP_CONTAINER=docker_{{cookiecutter.project_slug}}
+IMAGE_NAME ?= {{cookiecutter.docker_hub_user}}/{{cookiecutter.project_slug}}
+IMAGE_TAG ?= latest
+CONTAINER_NAME ?= docker_{{cookiecutter.project_slug}}
 
 build:
-	docker build -t $(APP_IMAGE) .
+	docker build -f Dockerfile -t ${IMAGE_NAME}:${IMAGE_TAG} .
+	docker push ${IMAGE_NAME}:${IMAGE_TAG}
 
 run:
-	docker run -t -d --name $(APP_CONTAINER)  $(APP_IMAGE)
+	- docker rm ${CONTAINER_NAME}
+	docker run -t -d --name ${CONTAINER_NAME} ${IMAGE_NAME}:${IMAGE_TAG}

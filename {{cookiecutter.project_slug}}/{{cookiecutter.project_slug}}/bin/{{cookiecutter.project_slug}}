@@ -3,12 +3,15 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-
+#
+# Sub-command entry point
+# Edit arguments of this function to get parameters from command-line interface
+# See begins for more info
 @begin.subcommand
-def train():
-    """Main command"""
-    import {{cookiecutter.project_slug}}.train
-    {{cookiecutter.project_slug}}.train.train()
+def {{cookiecutter.main_script_name}}():
+    """Primary entrypoint"""
+    import {{cookiecutter.project_slug}}.{{cookiecutter.main_script_name}}
+    {{cookiecutter.project_slug}}.{{cookiecutter.main_script_name}}.{{cookiecutter.main_script_name}}()
 
 
 @begin.start

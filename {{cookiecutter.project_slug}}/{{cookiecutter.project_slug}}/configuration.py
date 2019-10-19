@@ -158,7 +158,7 @@ class EnvConfigParser(ConfigParser):
         if section in self._sections:
             _section.update(copy.deepcopy(self._sections[section]))
 
-        section_prefix = 'AIRFLOW__{S}__'.format(S=section.upper())
+        section_prefix = '{{cookiecutter.env_prefix}}__{S}__'.format(S=section.upper())
         for env_var in sorted(os.environ.keys()):
             if env_var.startswith(section_prefix):
                 key = env_var.replace(section_prefix, '').lower()
@@ -186,7 +186,7 @@ class EnvConfigParser(ConfigParser):
 
         :param display_source: If False, the option value is returned. If True,
             a tuple of (option_value, source) is returned. Source is either
-            'airflow.cfg', 'default', 'env var', or 'cmd'.
+            '{{cookiecutter.project_slug}}.cfg', 'default', 'env var', or 'cmd'.
         :type display_source: bool
         :param display_sensitive: If True, the values of options set by env
             vars and bash commands will be displayed. If False, those options
@@ -195,7 +195,7 @@ class EnvConfigParser(ConfigParser):
         :param raw: Should the values be output as interpolated values, or the
             "raw" form that can be fed back in to ConfigParser
         :type raw: bool
-        :param include_env: Should the value of configuration from AIRFLOW__
+        :param include_env: Should the value of configuration from {{cookiecutter.env_prefix}}__
             environment variables be included or not
         :type include_env: bool
         :param include_cmds: Should the result of calling any *_cmd config be
@@ -206,7 +206,7 @@ class EnvConfigParser(ConfigParser):
         cfg = {}
         configs = [
             ('default', self.config_defaults),
-            ('airflow.cfg', self),
+            ('{{cookiecutter.project_slug}}.cfg', self),
         ]
 
         for (source_name, config) in configs:
@@ -219,13 +219,13 @@ class EnvConfigParser(ConfigParser):
 
         # add env vars and overwrite because they have priority
         if include_env:
-            for ev in [ev for ev in os.environ if ev.startswith('AIRFLOW__')]:
+            for ev in [ev for ev in os.environ if ev.startswith('{{cookiecutter.env_prefix}}__')]:
                 try:
                     _, section, key = ev.split('__', 2)
                     opt = self._get_env_var_option(section, key)
                 except ValueError:
                     continue
-                if not display_sensitive and ev != 'AIRFLOW__CORE__UNIT_TEST_MODE':
+                if not display_sensitive and ev != '{{cookiecutter.env_prefix}}__CORE__UNIT_TEST_MODE':
                     opt = '< hidden >'
                 elif raw:
                     opt = opt.replace('%', '%%')
@@ -234,9 +234,9 @@ class EnvConfigParser(ConfigParser):
 
                 section = section.lower()
                 # if we lower key for kubernetes_environment_variables section,
-                # then we won't be able to set any Airflow environment
-                # variables. Airflow only parse environment variables starts
-                # with AIRFLOW_. Therefore, we need to make it a special case.
+                # then we won't be able to set any {{cookiecutter.project_name}} environment
+                # variables. {{cookiecutter.project_name}} only parse environment variables starts
+                # with {{cookiecutter.env_prefix}}_. Therefore, we need to make it a special case.
                 if section != 'kubernetes_environment_variables':
                     key = key.lower()
                 cfg.setdefault(section, OrderedDict()).update({key: opt})
@@ -245,9 +245,10 @@ class EnvConfigParser(ConfigParser):
 
 
 def get_home_dir():
-    rv = expand_env_var(os.environ.get('{{cookiecutter.env_prefix}}_HOME', os.getcwd() ))
+    rv = expand_env_var(os.environ.get('{{cookiecutter.env_prefix}}_HOME', os.getcwd()))
     log.info("Using project home directory: {}".format(rv))
     return rv
+
 
 def get_config(home_dir):
     if '{{cookiecutter.env_prefix}}_CONFIG' not in os.environ:
@@ -260,8 +261,9 @@ def parameterized_config(template):
     return template.format(**all_vars)
 
 
-# Setting AIRFLOW_HOME and AIRFLOW_CONFIG from environment variables, using
-# "~/airflow" and "$AIRFLOW_HOME/airflow.cfg" respectively as defaults.
+# Setting {{cookiecutter.env_prefix}}_HOME and {{cookiecutter.env_prefix}}_CONFIG from environment variables, using
+# "~/{{cookiecutter.project_slug}}" and "${{cookiecutter.env_prefix}}_HOME/{{cookiecutter.project_slug}}.cfg"
+# respectively as defaults.
 
 HOME_DIR = get_home_dir()
 CONFIG_PATH = get_config(HOME_DIR)
@@ -286,4 +288,3 @@ conf.read(CONFIG_PATH)
 # Set logging level from configuration
 
 root_log.setLevel(getattr(logging, conf.get('logging', 'level').upper()))
-
