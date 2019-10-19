@@ -3,6 +3,19 @@ Cookiecutter tempalte for python ml project
 
 Based on Apache airflow
 
+# How to use cookiecutter projects?
+
+```bash
+# Install cookiecutter with pip
+pip install cookiecutter
+# Initialize project from git repository
+cookiecutter "repository url"
+```
+
+Cookiecutter will ask you few questions about the project and will create project structure
+
+See **Project template parameters description** For full list of parameters of current project
+
 Features:
 ----------------
 1. Dockerized execution
@@ -37,3 +50,15 @@ Docker execution
 ============================
 
 Project comes with pre-configured docker file which will copy source code, install all libraries in cache-friendly fashion and run help message: `project_slug --help`
+
+Project template parameters description
+============================
+
+1. **project_name** - Human-readable project name displayed in README and comments
+2. **project_slug** - root of the project, python module name, directory name
+3. **env_prefix** - All environment variables used in configuration will be prefixed with this
+4. **main_script_name** - Name of the main entry point executed with 'project_slug main_script_name'
+5. **author** - Human-readable creator name for setup.py
+6. **company** - Human-readable company name for docs and license
+7. **docker_hub_user** - used in docker push <hub-user>/<repo-name>:<tag>
+8. **description** - Default readme will be populated with this project description

@@ -6,36 +6,5 @@
     "author": "Harry Potter",
     "company": "{{ cookiecutter.author | lower | replace(' ','') }}",
     "docker_hub_user": "{{ cookiecutter.company | lower | replace(' ','_') }}",
-    "description": "Description",
-
-    "_help": {
-        "project_name": {
-            "prompt": "Human-readable project name displayed in README and comments",
-            "help": "This will be the root of the new project. bla bla."
-        },
-        "project_slug": {
-            "prompt": "root of the project, python module name, directory name",
-            "help": "Must be lowercase and a valid python identifier. Use something short"
-        },
-        "env_prefix": {
-            "prompt": "All environment variables used in configuration will be prefixed with this",
-            "help": "Project configuration allows for automatic parsing of environment variables. All configuration from cfg file can be replaced with environment vatiable as ENVPREFIX__SECTION__VALUE=xxx. You must use upper case for env prefix"
-        },
-        "main_script_name": {
-            "prompt": "Name of the main entry point executed with 'project_slug main_script_name'",
-            "help": "You can add other entry points later, however this one will be executed in docker"
-        },
-        "author": {
-            "prompt": "Human-readable creator name for license and contact information"
-        },
-        "company": {
-            "prompt": "Human-readable company name for docs"
-        },
-        "docker_hub_user": {
-            "prompt": "used in docker push <hub-user>/<repo-name>:<tag>"
-        },
-        "description": {
-            "prompt": "Default readme will be populated with this project description"
-        }
-    }
+    "description": "Description"
 }
