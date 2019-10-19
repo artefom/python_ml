@@ -1,8 +1,8 @@
 {
     "project_name": "Example Project",
     "project_slug": "{{ cookiecutter.project_name | lower | replace(' ','_') }}",
-    "env_prefix": "{{ cookiecutter.project_name | upper | replace(' ', '_') }}",
-    "main_script_name": "run.py",
+    "env_prefix": "{{ cookiecutter.project_slug | upper | replace(' ', '_') }}",
+    "main_script_name": "run",
     "author": "Harry Potter",
     "company": "{{ cookiecutter.author | lower | replace(' ','') }}",
     "docker_hub_user": "{{ cookiecutter.company | lower | replace(' ','_') }}",
